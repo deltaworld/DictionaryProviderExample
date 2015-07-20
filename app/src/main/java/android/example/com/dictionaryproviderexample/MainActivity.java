@@ -61,6 +61,8 @@ public class MainActivity extends ActionBarActivity {
                 int frequency = cursor.getInt(freqColumn);
                 dictTextView.append(("\n" + id + " - " + frequency + " - " + word));
             }
+
+            cursor.close();
         }
         // Always close your cursor to avoid memory leaks
 
