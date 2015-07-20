@@ -29,6 +29,16 @@ import android.widget.SimpleCursorAdapter;
  */
 public class MainActivity extends ActionBarActivity {
 
+    private static final String[] COLUMNS_TO_BE_BOUND = new String[]{
+            Words.WORD,
+            Words.FREQUENCY
+    };
+
+    private static final int[] LAYOUT_ITEMS_TO_FILL = new int[]{
+            android.R.id.text1,
+            android.R.id.text2
+    };
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,23 +47,19 @@ public class MainActivity extends ActionBarActivity {
         // Get the ListView which will be populated with the Dictionary ContentProvider data.
         ListView dictListView = (ListView) findViewById(R.id.dictionary_list_view);
 
-
         // Get the ContentResolver which will send a message to the ContentProvider
         ContentResolver resolver = getContentResolver();
-
 
         // Get a Cursor containing all of the rows in the Words table
         Cursor cursor = resolver.query(Words.CONTENT_URI, null, null, null, null);
 
-        String[] columnNames = new String[]{Words.WORD, Words.FREQUENCY};
-
-        int[] columnIndex = new int[]{android.R.id.text1, android.R.id.text2};
-
-        // -- YOUR CODE BELOW HERE -- //
-
         // Set the Adapter to fill the standard two_line_list_item layout with data from the Cursor.
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
-                android.R.layout.two_line_list_item, cursor, columnNames, columnIndex, 0);
+                android.R.layout.two_line_list_item,
+                cursor,
+                COLUMNS_TO_BE_BOUND,
+                LAYOUT_ITEMS_TO_FILL,
+                0);
 
         // Don't forget to attach the adapter to the ListView
         dictListView.setAdapter(adapter);
