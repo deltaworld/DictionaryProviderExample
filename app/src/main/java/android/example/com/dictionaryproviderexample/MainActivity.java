@@ -43,8 +43,9 @@ public class MainActivity extends ActionBarActivity {
 
         // Surround the cursor in a try statement so that the finally block will eventually execute
         try (Cursor cursor = resolver.query(Words.CONTENT_URI, null, null, null, null)) {
-            dictTextView.setText("The UserDictionary contains ");
-            // -- YOUR CODE BELOW HERE -- //
+            dictTextView.setText("The UserDictionary contains " + cursor.getCount() + " words\n");
+            dictTextView.append("COLUMNS: " + Words._ID + " - " + Words.FREQUENCY +
+                    " - " + Words.WORD);
 
             // Get the index of the column containing the actual words, using
             // UserDictionary.Words.WORD, which is the header of the word column.
@@ -61,7 +62,6 @@ public class MainActivity extends ActionBarActivity {
                 int frequency = cursor.getInt(freqColumn);
                 dictTextView.append(("\n" + id + " - " + frequency + " - " + word));
             }
-
             cursor.close();
         }
         // Always close your cursor to avoid memory leaks
