@@ -45,13 +45,19 @@ public class MainActivity extends ActionBarActivity {
         // Get a Cursor containing all of the rows in the Words table
         Cursor cursor = resolver.query(Words.CONTENT_URI, null, null, null, null);
 
+        String[] columnNames = new String[]{Words.WORD, Words.FREQUENCY};
+
+        int[] columnIndex = new int[]{android.R.id.text1, android.R.id.text2};
 
         // -- YOUR CODE BELOW HERE -- //
 
         // Set the Adapter to fill the standard two_line_list_item layout with data from the Cursor.
-        SimpleCursorAdapter adapter = null;
-
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
+                android.R.layout.two_line_list_item, cursor, columnNames, columnIndex, 0);
 
         // Don't forget to attach the adapter to the ListView
+        dictListView.setAdapter(adapter);
+
+        cursor.close();
     }
 }
